@@ -1,41 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import RefreshQuoteButton from './RefreshQuoteButton.jsx';
 
-class Message extends React.Component {
-  // Constructors are only used in class components, so get rid of this again!
-  // But... where do we put this.state? 🤔
-  constructor(props) {
-    super(props);
+const Message = ({ samplePhrases }) => {
+  const [message, setMessage] = useState('');
 
-    this.state = {
-      message: ''
-    }
+  const refreshQuote = () => {
+    let randomIndex = Math.floor(Math.random() * samplePhrases.length);
+    setMessage(samplePhrases[randomIndex]);
+  };
 
-    this.refreshQuote = this.refreshQuote.bind(this);
-  }
+  useEffect(refreshQuote);
 
-  // TODO: Replace this lifecycle method with the appropriate hook!
-  componentDidMount() {
-    this.refreshQuote();
-  }
-
-  // TODO: Refactor this to use a stateSetter function instead of `this.setState`
-  refreshQuote() {
-    let randomIndex = Math.floor(Math.random() * this.props.samplePhrases.length);
-
-    this.setState({
-      message: this.props.samplePhrases[randomIndex]
-    })
-  }
-
-  render() {
-    return (
-      <div className='message'>
-        {this.state.message}
-        <RefreshQuoteButton refresh={this.refreshQuote}/>
-      </div>
-    )
-  }
-}
+  return (
+    <div className='message'>
+      {message}
+      <RefreshQuoteButton refresh={refreshQuote} />
+    </div>
+  );
+};
 
 export default Message;
