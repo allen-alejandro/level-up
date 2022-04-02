@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import CowView from './CowView.jsx';
 import CowList from './CowList.jsx';
@@ -12,74 +12,44 @@ const volatileCows = [
   'Viola Shank',
   'Rich Eye',
   'Frank',
-  'Kurt'
+  'Kurt',
 ];
 
-class LevelTwo extends React.Component {
-  constructor(props) {
-    super(props)
+const LevelTwo = (props) => {
+  const [cows, setCows] = useState(volatileCows);
+  const [selectedCow, setSelectedCow] = useState(volatileCows[0]);
 
-    this.state = {
-      cows: volatileCows,
-      selectedCow: volatileCows[0]
-    }
+  const displayCow = (cow) => {
+    setCows(cows);
+    setSelectedCow(cow);
+  };
 
-    this.displayCow = this.displayCow.bind(this);
-    this.addNewCow = this.addNewCow.bind(this);
-    this.deleteCow = this.deleteCow.bind(this);
-  }
-
-  displayCow( cow ) {
-    this.setState({
-      cows: this.state.cows,
-      selectedCow: cow,
-    })
-  }
-
-  addNewCow( cow ) {
-    let hold = volatileCows.slice()
+  const addNewCow = (cow) => {
+    let hold = volatileCows.slice();
     hold.push(cow);
+    setCows(hold);
+    console.log('Added ', cow);
+  };
 
-    this.setState({
-      cows: hold
-    }, () => {
-      console.log('Added ', cow);
-    });
-  }
-
-  deleteCow( cow ) {
+  const deleteCow = (cow) => {
     const index = volatileCows.indexOf(cow);
-
     let hold = volatileCows.slice();
     hold.splice(index, 1);
+    setCows(hold);
+    setSelectedCow(hold[0]);
+    console.log('Removed ', cow);
+  };
 
-    this.setState({
-      cows: hold,
-      selectedCow: hold[0]
-    }, () => {
-      console.log('Removed ', cow);
-    });
-  }
-
-  render() {
-    return (
+  return (
+    <div>
+      <CowView cows={cows} cow={selectedCow} onDeleteClick={deleteCow} />
       <div>
-        <CowView
-          cows={this.state.cows}
-          cow={this.state.selectedCow}
-          onDeleteClick={this.deleteCow}
-        />
-        <div>
-          <CowForm onSubmit={this.addNewCow} />
-          <br></br>
-          <CowList
-            cows={this.state.cows}
-            onDisplayClick={this.displayCow}
-          />
-        </div>
+        <CowForm onSubmit={addNewCow} />
+        <br></br>
+        <CowList cows={cows} onDisplayClick={displayCow} />
       </div>
-    )
-  }
-}
+    </div>
+  );
+};
 
 export default LevelTwo;

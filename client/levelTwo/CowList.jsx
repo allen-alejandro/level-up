@@ -1,35 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Cow from './Cow.jsx';
 
-class CowList extends React.Component {
-  constructor(props) {
-    super(props)
+const CowList = ({ onDisplayClick, cows }) => {
+  const [selectedCow, setSelectedCow] = useState('');
 
-    this.state = {
-      selectedCow: '',
-    }
+  const handleDisplayClick = (selectedCow) => {
+    onDisplayClick(selectedCow);
+  };
 
-    this.handleDisplayClick = this.handleDisplayClick.bind(this);
-  }
-
-  handleDisplayClick(selectedCow) {
-    this.props.onDisplayClick(selectedCow);
-  }
-
-  render() {
-    return (
-      <div>
-        { this.props.cows.map( (cow, i) => (
-          < Cow
-            name={cow}
-            handleDisplayClick={this.handleDisplayClick}
-            key={i}
-          />
-        )) }
-      </div>
-    )
-  }
-}
+  return (
+    <div>
+      {cows.map((cow, i) => (
+        <Cow name={cow} handleDisplayClick={handleDisplayClick} key={i} />
+      ))}
+    </div>
+  );
+};
 
 export default CowList;

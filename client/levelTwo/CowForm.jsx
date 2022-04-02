@@ -1,49 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
-class CowForm extends React.Component {
-  constructor(props) {
-    super(props);
+const CowForm = ({ onSubmit }) => {
+  const [name, setName] = useState('');
 
-    this.state = {
-      name: ''
-    }
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
 
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleNameChange(e) {
-    this.setState({
-      name: e.target.value
-    })
-  }
-
-  handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    onSubmit(name);
+    setName('');
+  };
 
-    this.props.onSubmit(this.state.name);
-    this.setState({
-      name: ''
-    })
-  }
-
-  render() {
-    return (
-      <div>
-        <h2>Wanna see your cow here?</h2>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            onChange={this.handleNameChange}
-            type='text'
-            placeholder='Name'
-            value={this.state.name}
-          />
-          <button type='submit'>Add me!</button>
-        </form>
-      </div>
-    )
-  }
-}
+  return (
+    <div>
+      <h2>Wanna see your cow here?</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          onChange={handleNameChange}
+          type='text'
+          placeholder='Name'
+          value={name}
+        />
+        <button type='submit'>Add me!</button>
+      </form>
+    </div>
+  );
+};
 
 export default CowForm;

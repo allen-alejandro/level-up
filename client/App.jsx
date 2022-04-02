@@ -5,8 +5,8 @@ import LevelTwo from './levelTwo/LevelTwo.jsx';
 
 // TODO: Hmmmmmm, something's not right here.
 const App = (props) => {
-  const [showLevelOne, setShowLevelOne] = useState(true);
-  const [showLevelTwo, setShowLevelTwo] = useState(false);
+  const [showLevelOne, setShowLevelOne] = useState(false);
+  const [showLevelTwo, setShowLevelTwo] = useState(true);
   const [showLevelThree, setShowLevelThree] = useState(false);
 
   const updateLevelOne = () => {

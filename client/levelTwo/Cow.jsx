@@ -1,26 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-class Cow extends React.Component {
-  constructor(props) {
-    super(props);
+const Cow = ({ handleDisplayClick, name }) => {
+  const handleDisplayClickHandler = () => {
+    handleDisplayClick(name);
+  };
 
-    this.handleDisplayClick = this.handleDisplayClick.bind(this);
-  }
-
-  handleDisplayClick() {
-    this.props.handleDisplayClick(this.props.name);
-  }
-
-  render() {
-    return (
-      <div className='cow-details'>
-        {this.props.name}
-        <br></br>
-        <button onClick={this.handleDisplayClick} className='display-button'>✨ Show me off</button>
-        <br></br>
-      </div>
-    )
-  }
-}
+  return (
+    <div className='cow-details'>
+      {name}
+      <br></br>
+      <button onClick={handleDisplayClickHandler} className='display-button'>
+        ✨ Show me off
+      </button>
+      <br></br>
+    </div>
+  );
+};
 
 export default Cow;
